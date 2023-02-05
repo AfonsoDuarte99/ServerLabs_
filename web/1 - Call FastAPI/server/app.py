@@ -47,6 +47,7 @@ async def hello3(name: str):
 # https://fastapi.tiangolo.com/tutorial/body/
 class NameArgs(BaseModel):
     name: str
+    surname: str
 #:
 
 @app.post('/hello4')
@@ -56,6 +57,17 @@ async def hello4(name: NameArgs):
 
 ################################################################################
 
+@app.get('/sum1/{num1}/{num2}')
+async def sum1(num1:int,num2:int):
+    ...
+#:
+
+################################################################################
+
+@app.post('/sum2')
+async def sum2():
+    ...
+#;
 
 ################################################################################
 

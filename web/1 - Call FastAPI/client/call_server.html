@@ -33,9 +33,10 @@
 
         async function helloPOSTasJSON() {
             const name = document.querySelector('#formHello4 input[name="name"]').value;
+            const surname = document.querySelector('#formHello4 input[name="surname"]').value;
             const fetchURL = `${URL}/hello4`;
             try {
-                alert(await byPOSTasJSON(fetchURL, {name}));
+                alert(await byPOSTasJSON(fetchURL, {name, surname}));
             }
             catch (error) {
                 console.error("ERROR:", error);
@@ -131,7 +132,6 @@
                 <label>Nome</label>
                 <input type="text" name="name">
                 <input type="text" name="surname">
-                <input type="number" name="age">
                 <button id="btnHello4" type="button">Hello</button>
             </div>
         </form>
