@@ -17,7 +17,7 @@ DEFAULT_INDENTATION = 3
 ##########################################################################
 
 ##
-##  Produtos e Catalogo
+##      Produtos e Catalogo
 ##
 
 ##########################################################################
@@ -67,6 +67,18 @@ class Produto:
         self.preco = preco
     #:
 
+    @classmethod
+    def from_csv(cls, linha: str, delim = CSV_DEFAULT_DELIM) -> 'Produto':
+        attrs = linha.split(delim)
+        return Produto(
+            id_ = int(attrs[0]),
+            nome = (attrs[1]),
+            tipo = (attrs[2]),
+            quantidade = int(attrs[3]),
+            preco = dec(attrs[4]),
+            )
+    #:
+
     @property
     def desc_tipo(self) -> str:
         return PRODUCT_TYPES[self.tipo]
@@ -85,6 +97,12 @@ class Produto:
 
     def com_iva(self,taxa_iva:dec) -> dec:
         return self.preco * (1 + taxa_iva/100)
+    #:
+#:
+
+class ProdutoEspecial(Produto):
+    def valor_stock(self) -> dec:
+        return self.quantidade * self.preco
     #:
 #:
 
@@ -141,18 +159,46 @@ class DuplicateValue(Exception):
     pass
 #:
 
-#produtos = CatalogoProdutos()
-#prod1 = Produto(30987, 'pão de milho', 'AL',2,dec('1'))
-#produtos.append(prod1)
+###########################################################################
+
+##
+##      Leitura dos Ficheiros
+##
+
+##########################################################################
+
+def le_produtos(caminho_fich: str, delim = CSV_DEFAULT_DELIM) -> CatalogoProdutos:
+    prods = CatalogoProdutos()
+    #ler ficheiro e popular cartalogo com cada um dos produtos
+    #uma linha do ficheiro corresponde a um produto
+    with open(caminho_fich, 'rt') as fich:
+        for linha in linhas_relevantes(fich):
+            prods.append(Produto.from_csv(linha, delim))
+    return prods
+#:
+
+def linhas_relevantes(fich: TextIO):
+    for linha in fich:
+            linha = linha.strip()
+            if len(linha) == 0 or linha[0] == '#':
+                continue
+            yield linha
+#:
 
 def main() -> None:
-    produtos = CatalogoProdutos()
-    produtos.append(Produto(30987, 'pão de milho', 'AL',2,dec('1')))
-    produtos.append(Produto(30098, 'leite mimosa', 'AL',10,dec('2')))
-    produtos.append(Produto(21109, 'fairy', 'DL',20,dec('3'))) 
+    #produtos = CatalogoProdutos()
+    #produtos.append(Produto(30987, 'pão de milho', 'AL',2,dec('1')))
+    #produtos.append(Produto(30098, 'leite mimosa', 'AL',10,dec('2')))
+    #produtos.append(Produto(21109, 'fairy', 'DL',20,dec('3'))) 
     #produtos.append(Produto(21109, 'fairy', 'DL',20,dec('3'))) 
 
+    produtos = le_produtos('produtos.csv')
     produtos._dump()
+
+    print('------')
+
+    produto = ProdutoEspecial.from_csv('21112,sonasol,DL,25,2.5')
+    print(type(produto))
 #: 
 
 if __name__ == 'main':
