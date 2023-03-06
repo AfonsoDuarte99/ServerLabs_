@@ -47,6 +47,8 @@ class Tournament(Base): # type: ignore (Pylance doesn't recognize Base)
     name        = Column(String, nullable=False, unique=True)
     start_date  = Column(Date, nullable=False)
     end_date    = Column(Date, nullable=False)
+
+    players_enrolled = relationship("Player", back_populates="tournament")
 #:
 
 # Tournament.players = relationship("Player", order_by=Player.id, back_populates="tournament")
@@ -69,70 +71,69 @@ class Player(Base): # type: ignore (Pylance)
 #:
 
     def populate_db():
-       # db_session = sessionLocal()
+       # db_session = SessionLocal()
        with SessionLocal() as db_session:
-        # The above Session is associated with our SQLite-enabled Engine,
-        # but it hasn't opened any connections yet. When it's first used,
-        # it retrieves a connection from a pool of connections maintained
-        # by the Engine, and holds onto it until we commit all changes
-        # and/or chose the session object.
-        player1 = Player(
-                full_name = 'Armando Alves',
-                email = 'arm@mail.com',
-                hashed_password = 'abc-hashedpw',
-                phone_number = '+351922781977',
-                level = 'beginner',
-        ) 
-        db_session.add(player1)
-        db_session.add([
-                Tournament(
-                    id = 1,
-                    name = 'Torneio da Páscoa',
-                    start_date = date(2023,4,17),
-                    end_date = date(2023,4,25),
-                ),
-                Tournament(
-                    id = 2,
-                    name = 'Torneio da Amizade',
-                    start_date = date(2023,5,17),
-                    end_date = date(2023,5,25),
-                ),
-                player1,
-                Player(
-                full_name = 'Augusto Avelar',
-                email = 'aug@mail.com',
-                hashed_password = '123-hashedpw',
-                phone_number = '+351921061344',
-                level = 'pre-pro',
-                tournament_id = 1,
-                ),
-                Player(
-                full_name = 'Arnaldo Almeida',
-                email = 'arn@mail.com',
-                hashed_password = 'xyz-hashedpw',
-                phone_number = '+351964139829',
-                level = 'advanced',
-                tournament_id = 2,
-                ),  
-            ])
-            # At this point, we say that the instance is pending; no SQL has
-            # yet been issued and the object is not yet represented by a row
-            # in the database. The Session will issue the SQL to persist Ed
-            # Jones as soon as is needed, using a process known as a flush.
-            # If we query the database for Ed Jones, all pending information
-            # will first be flushed, and the query is issued immerdiately
-            # thereafter.
-            # https://docs.sqlalchemy.org/en/14/orm/session_state_management.html#session-object-states 
+            # The above Session is associated with our SQLite-enabled Engine,
+            # but it hasn't opened any connections yet. When it's first used,
+            # it retrieves a connection from a pool of connections maintained
+            # by the Engine, and holds onto it until we commit all changes
+            # and/or chose the session object.
+            player1 = Player(
+                    full_name = 'Armando Alves',
+                    email = 'arm@mail.com',
+                    hashed_password = 'abc-hashedpw',
+                    phone_number = '+351922781977',
+                    level = 'beginner',
+            ) 
+            db_session.add_all([
+                    Tournament(
+                        id = 1,
+                        name = 'Torneio da Páscoa',
+                        start_date = date(2023,4,17),
+                        end_date = date(2023,4,25),
+                    ),
+                    Tournament(
+                        id = 2,
+                        name = 'Torneio da Amizade',
+                        start_date = date(2023,5,17),
+                        end_date = date(2023,5,25),
+                    ),
+                    player1,
+                    Player(
+                    full_name = 'Augusto Avelar',
+                    email = 'aug@mail.com',
+                    hashed_password = '123-hashedpw',
+                    phone_number = '+351921061344',
+                    level = 'pre-pro',
+                    tournament_id = 1,
+                    ),
+                    Player(
+                    full_name = 'Arnaldo Almeida',
+                    email = 'arn@mail.com',
+                    hashed_password = 'xyz-hashedpw',
+                    phone_number = '+351964139829',
+                    level = 'advanced',
+                    tournament_id = 2,
+                    ),  
+                ])
+                # At this point, we say that the instance is pending; no SQL has
+                # yet been issued and the object is not yet represented by a row
+                # in the database. The Session will issue the SQL to persist Ed
+                # Jones as soon as is needed, using a process known as a flush.
+                # If we query the database for Ed Jones, all pending information
+                # will first be flushed, and the query is issued immerdiately
+                # thereafter.
+                # https://docs.sqlalchemy.org/en/14/orm/session_state_management.html#session-object-states 
 
-            player1.full_name = 'Armando Alvarez' # type: ignore
-            # The Session is paying attention. It knows, for example, that
-            # 'Armando Alvarez' has been modified.
-            # At the REPL we can try
-            #       >>>db_session.dirty
-            #       >>>db_session.new
-            db_session.commit()
-            # commit the changes to the database (so that they are saved).
-            # the objects are flushed to the DB.
+                player1.full_name = 'Armando Alvarez' # type: ignore
+                # The Session is paying attention. It knows, for example, that
+                # 'Armando Alvarez' has been modified.
+                # At the REPL we can try
+                #       >>>db_session.dirty
+                #       >>>db_session.new
+                db_session.commit()
+                # commit the changes to the database (so that they are saved).
+                # the objects are flushed to the DB.
 #:
 
 

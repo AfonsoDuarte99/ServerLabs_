@@ -35,12 +35,13 @@ import schemas as sch
 import models
 from schemas import ErrorCode
 
+
 app = FastAPI()
 
 origins = [
     "https://127.0.0.1.5500",
     "https://127.0.0.1.5501",
-    "https://127.0.0.1.8000",
+    "https://127.0.0.1.8080",
 ]
 
 #https://fastapi.tiangolo.com/tutorial/cors
@@ -54,7 +55,7 @@ app.add_middleware(
 )
 
 def get_db_session():
-    db_session = db.sessionLocal()
+    db_session = db.SessionLocal()
     try:
         yield db_session
     finally:
@@ -77,10 +78,10 @@ async def register(
 
     if db_player.tournament_id == tourn_id:
         error = ErrorCode.ERR_PLAYER_ALREADY_ENROLLED
-        raise HTTPException(status_code=400, detail=error.details(tourn_id = tourn_id))
+        raise HTTPException(status_code = 400, detail = error.details(tourn_id = tourn_id))
 
     if crud.get_player_by_id(tourn_id) is None:
-        error = ErrorCode.ERR_UNSPECIFIED_TOURNAMENT_ID
+        error = ErrorCode.ERR_UNKNOWN_TOURNAMENT_ID
         raise HTTPException(status_code = 404, detail = error.details(id = tourn_id))
 
     crud.update_player_tournament(db_session, db_player, tourn_id)
@@ -111,7 +112,7 @@ Options:
     create_ddl = args['--create-ddl']
     populate_db = args['--populate-db']
     if create_ddl:
-        db.create_metadata()
+        db.create_engine()
         if populate_db:
             models.populate_db()
         #:

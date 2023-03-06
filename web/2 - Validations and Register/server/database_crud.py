@@ -14,24 +14,28 @@ import schemas
 import models
 
 def get_player_by_id(db_session: Session, tournament_id: int) -> models.Tournament | None:
-    return db_session.query(models.Tournament).filter(models.Tournament.id == tournament_id).first()
+    return db_session.query(models.Tournament).filter(
+        models.Tournament.id == tournament_id
+        ).first()
 #:
 
 def get_player_by_email(db_session: Session, email: str) -> models.Player | None:
-    return db_session.query(models.Player).filter(models.Player.email == email).first()
+    return db_session.query(models.Player).filter(
+        models.Player.email == email
+        ).first()
 #:
 
 def get_player_by_id(db_session: Session, player_id: int) -> models.Player | None:
     return db_session.query(models.Player).filter(
         models.Player.id == player_id
-    ).first()
+        ).first()
 #:
 
 def create_player(
     db_session: Session, 
     player: schemas.PlayerRegister,
 ) -> models.Player:
-    fake_hashed_password = player.password + 'hashedpw'
+    fake_hashed_password = player.password + '-hashedpw'
     db_player = models.Player(
         full_name = player.full_name,
         email = player.email,
@@ -50,6 +54,6 @@ def update_player_tournament(
     db_player: models.Player,
     tournament_id: int,
 ):
-    db_player.tournament_id = tournament_id
+    db_player.tournament_id = tournament_id #type:ignore
     db_session.commit()
 #:
