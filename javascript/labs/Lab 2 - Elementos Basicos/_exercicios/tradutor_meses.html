@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tradutor de Meses</title>
+    <link rel="stylesheet" href="tradutor_meses.css" type="text/css">
+    <script src="tradutor_meses.js" defer></script>
+</head>
+<body>
+    <!-- 
+        Alterado a partir do modelo em 
+        https://colorlib.com/wp/template/colorlib-contact-form/ 
+    -->
+    <div class="container">  
+        <form id="contact" action="">
+            <h3>Tradução de Meses</h3>
+            <h4>Preencha os seguintes campos</h4>
+            <fieldset>
+                <label>Número do Mês</label>
+                <input id="monthNum" type="text" 
+                        tabindex="1" required autofocus>
+            </fieldset>
+            <fieldset>
+                <label>Língua</label>
+                <select id="language" >
+                    <option value="pt" selected>Português</option>
+                    <option value="en">English</option>
+                    <option value="es">Español/Castellano</option>
+                </select>
+            </fieldset>
+            <fieldset>
+                <div id="monthNamePanel" class="outputPanel"></div>
+            </fieldset>
+            <fieldset>
+                <button name="monthNameBtn" id="monthNameBtn" type="button"
+                   >Obter</button>
+            </fieldset>
+            <p class="copyright">Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a></p>
+        </form>
+    </div>
+</body>
+</html>

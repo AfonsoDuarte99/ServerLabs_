@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+        https://javascript.info/modules-intro
+        https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
+        https://jsfiddle.net/1cazpb5t/    exemplo com date-fns
+    -->
+    <link rel="stylesheet" href="calculadora_dias.css" type="text/css">
+    <script type="module" src="calculadora_dias.js"></script>
+    <title>Calculadora de Dias</title>
+</head>
+<body>
+    <!--
+        Alterado a partir do modelo em 
+        https://colorlib.com/wp/template/colorlib-contact-form/ 
+    -->
+    <div class="container">  
+        <form id="contact" action="">
+            <h3>Calculadora de dias</h3>
+            <h4>Preencha os seguintes campos</h4>
+            <fieldset>
+                <label>Data 1?</label>
+                <input id="date1" type="date" min="1" value=""
+                        tabindex="1" required autofocus>
+            </fieldset>
+            <fieldset>
+                <label>Data 2?</label>
+                <input id="date2" type="date" min="1" value=""
+                        tabindex="2" required>
+            </fieldset>
+            <fieldset>
+                <div id="diffInDays" class="outputPanel"></div>
+            </fieldset>
+            <fieldset>
+                <button name="computeTotal" id="computeTotal" type="button"
+                    >Calcular</button>
+            </fieldset>
+            <p class="copyright">Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a></p>
+        </form>
+    </div>
+</body>
+</html>

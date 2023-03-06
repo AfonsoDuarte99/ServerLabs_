@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>    
+    <script>
+        function fade(id) {
+            let elem = document.getElementById(id)
+            let level = 1;
+            function step() {
+               let h = level.toString(16);
+               elem.style.backgroundColor = '#FFFF' + h + h; 
+               if (level < 15) {
+                   level += 1;
+                   setTimeout(step, 100);
+               }
+            }
+            setTimeout(step, 100);
+        }
+    </script>
+</head>
+<body>
+    <div id="area" style="height: 100px; width: 600px; 
+            background-color: #ff0;" onclick="fade('area')">
+    </div>
+</body>
+</html>

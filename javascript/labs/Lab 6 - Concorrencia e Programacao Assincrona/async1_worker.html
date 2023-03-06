@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function log(...args) {
+            let timeDiff = Date.now() - now;
+            let msg = `Instante: ${timeDiff.toString().padStart(4)}ms | `;
+            console.log(msg, ...args);
+        }
+
+        function tarefaRapida_Sync(codigoTarefa) {
+            log(`Tarefa ${codigoTarefa} concluída`);
+        }
+
+        function tarefaLenta_Comp_Async2(codigoTarefa, callback) {
+            const worker = new Worker('async1_worker.js');
+            worker.postMessage([codigoTarefa, now]);
+            worker.onmessage = (event) => callback(event.data);
+        }
+
+        now = Date.now();
+        tarefaRapida_Sync('A');
+        tarefaLenta_Comp_Async2('1', (i) => console.log(`Last i: ${i}`));
+        setTimeout(() => tarefaRapida_Sync('C', 0)); 
+        tarefaRapida_Sync('B'); 
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

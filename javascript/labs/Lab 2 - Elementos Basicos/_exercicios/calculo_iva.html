@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Jantar de Amigos</title>
+    <link rel="stylesheet" href="calcula_iva.css" type="text/css">
+    <script src="calcula_iva.js" defer></script>
+</head>
+<body>
+    <!--
+        Alterado a partir do modelo em 
+        https://colorlib.com/wp/template/colorlib-contact-form/ 
+    -->
+    <div class="container">  
+        <form id="contact" action="">
+            <h3>Calculadora de IVA</h3>
+            <h4>Preencha os seguintes campos</h4>
+            <fieldset>
+                <label>Preço do produto? (€) </label>
+                <input id="price" type="number" min="1"
+                        tabindex="1" required>
+            </fieldset>
+            <fieldset>
+                <label>Taxa de IVA? (%)</label>
+                <input id="vatRate" type="number" min="0" max="100" value="23"
+                        tabindex="2" required>
+            </fieldset>
+            <fieldset>
+                <label>Desconto? (%)</label>
+                <input id="deductionRate" type="number" min="0" max="100"
+                        tabindex="3">
+            </fieldset>
+            <fieldset>
+                <div id="totalPanel" class="outputPanel"></div>
+            </fieldset>
+            <fieldset>
+                <button name="computeTotal" id="computeTotal" type="button"
+                    >Calcular</button>
+            </fieldset>
+            <p class="copyright">Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a></p>
+        </form>
+    </div>
+</body>
+</html>
